@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Load ABI
-const abiPath = path.join(__dirname, "../artifacts/contracts/RapidX.sol/RapidX.json");
+const abiPath = path.join(__dirname, "../artifacts/contracts/ExampleContract.sol/ExampleContract.json");
 
 try {
     const contractJson = JSON.parse(fs.readFileSync(abiPath, "utf8"));

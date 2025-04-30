@@ -19,11 +19,11 @@ async function main() {
 
     // Load the deployment info from the deployments directory
     const network = process.env.HARDHAT_NETWORK || "local";
-    const deploymentFile = path.join(__dirname, `../deployments/rapidx-deployment-${network}.json`);
+    const deploymentFile = path.join(__dirname, `../deployments/examplecontract-deployment-${network}.json`);
 
     if (!fs.existsSync(deploymentFile)) {
         console.error(`Deployment not found at ${deploymentFile}`);
-        console.error("Please run deploy-rapidx.ts first");
+        console.error("Please run deploy-examplecontract.ts first");
         process.exit(1);
     }
 
@@ -35,10 +35,10 @@ async function main() {
         process.exit(1);
     }
 
-    console.log(`Using RapidX contract at: ${proxyAddress}`);
+    console.log(`Using ExampleContract contract at: ${proxyAddress}`);
 
     // Get the contract instance
-    const rapidx = await ethers.getContractAt("RapidX", proxyAddress);
+    const examplecontract = await ethers.getContractAt("ExampleContract", proxyAddress);
 
     // Executor address to set
     const executorAddress = "0x4D9C1Ae0d1983Ce041358e6Db1aAf678C78CfA7d";
@@ -54,11 +54,11 @@ async function main() {
 
     try {
         // Check current status
-        const currentStatus = await rapidx.executors(executorAddress);
+        const currentStatus = await examplecontract.executors(executorAddress);
         console.log(`Current executor status: ${currentStatus}`);
 
         // Set the executor status
-        const tx = await rapidx.setExecutor(executorAddress, status);
+        const tx = await examplecontract.setExecutor(executorAddress, status);
         console.log("Transaction submitted:", tx.hash);
 
         // Wait for the transaction to be mined
@@ -66,11 +66,11 @@ async function main() {
         console.log("✅ Executor status updated successfully!");
 
         // Verify the new status
-        const newStatus = await rapidx.executors(executorAddress);
+        const newStatus = await examplecontract.executors(executorAddress);
         console.log(`New executor status: ${newStatus}`);
 
         // Save the executor info to a JSON file
-        const executorsFile = path.join(__dirname, `../deployments/rapidx-executors-${network}.json`);
+        const executorsFile = path.join(__dirname, `../deployments/examplecontract-executors-${network}.json`);
 
         // Load existing executors or create new file
         let executorsInfo: ExecutorsInfoMap = {};

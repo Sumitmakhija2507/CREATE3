@@ -19,20 +19,10 @@ async function main() {
         if (factoryResult.stderr) console.error(factoryResult.stderr);
 
 
-        console.log(`\n1. Deploying Rapidx on ${networkName}...`);
+        console.log(`\n1. Deploying Example Contract on ${networkName}...`);
         const deploy = await execAsync(`npx hardhat run scripts/deploy.ts --network ${networkName}`);
         console.log(deploy.stdout);
         if (deploy.stderr) console.error(deploy.stderr);
-
-        // console.log(`\n2. Deploying RapidX Implementation on ${networkName}...`);
-        // const implResult = await execAsync(`npx hardhat run scripts/deploy-rapidx-implementation.ts --network ${network}`);
-        // console.log(implResult.stdout);
-        // if (implResult.stderr) console.error(implResult.stderr);
-
-        // console.log(`\n3. Deploying RapidX Proxy on ${network}...`);
-        // const proxyResult = await execAsync(`npx hardhat run scripts/deploy-rapidx-proxy.ts --network ${network}`);
-        // console.log(proxyResult.stdout);
-        // if (proxyResult.stderr) console.error(proxyResult.stderr);
 
         console.log(`\n✅ Complete deployment process finished successfully on ${network}!`);
     } catch (error) {

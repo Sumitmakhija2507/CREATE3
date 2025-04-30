@@ -2,16 +2,16 @@ import { expect } from "chai";
 import { ethers, upgrades } from "hardhat";
 import { Signer } from "ethers";
 
-describe("RapidX UUPS Upgradeable Contract", function () {
-    let rapidXProxy: any;
+describe("ExampleContract UUPS Upgradeable Contract", function () {
+    let examplecontractProxy: any;
     let owner: Signer;
     let user: Signer;
     let token: string;
 
     beforeEach(async function () {
         [owner, user] = await ethers.getSigners();
-        const RapidX = await ethers.getContractFactory("RapidX");
-        rapidXProxy = await upgrades.deployProxy(RapidX, [], { initializer: "initialize" });
+        const examplecontract = await ethers.getContractFactory("ExampleContract");
+        examplecontractProxy = await upgrades.deployProxy(RapidX, [], { initializer: "initialize" });
         await rapidXProxy.waitForDeployment();
     });
 

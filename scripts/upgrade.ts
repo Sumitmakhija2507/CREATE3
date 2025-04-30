@@ -4,7 +4,7 @@ import path from "path";
 
 async function main() {
     const [deployer] = await ethers.getSigners();
-    console.log("Upgrading RapidX Implementation with account:", deployer.address);
+    console.log("Upgrading ExampleContract Implementation with account:", deployer.address);
 
     // Load deployment information
     const network = process.env.HARDHAT_NETWORK || "local";
@@ -14,7 +14,7 @@ async function main() {
 
     if (!fs.existsSync(proxyDeploymentFile)) {
         console.error(`Proxy deployment not found at ${proxyDeploymentFile}`);
-        console.error("Please run deploy-rapidx-proxy.ts first");
+        console.error("Please run deploy-examplecontract-proxy.ts first");
         process.exit(1);
     }
 
@@ -30,14 +30,14 @@ async function main() {
     const factory = await ethers.getContractAt("ICREATE3Factory", factoryAddress);
 
     // Deploy the new implementation
-    console.log("\n📄 Deploying new RapidX implementation...");
+    console.log("\n📄 Deploying new ExampleContract implementation...");
 
     // Get the updated contract factory (make sure you've updated the contract code)
-    const RapidX = await ethers.getContractFactory("RapidX");
-    const implementationBytecode = RapidX.bytecode;
+    const examplecontract = await ethers.getContractFactory("ExampleContract");
+    const implementationBytecode = examplecontract.bytecode;
 
     // Choose a new salt for the new implementation version
-    const newImplementationSalt = ethers.id("RAPIDX_IMPLEMENTATION_V2");
+    const newImplementationSalt = ethers.id("EXAMPLECONTRACT_IMPLEMENTATION_V2");
 
     // Deploy the new implementation using CREATE3
     const implementationTx = await factory.deploy(
@@ -54,7 +54,7 @@ async function main() {
         newImplementationSalt
     );
 
-    console.log("✅ New RapidX implementation deployed to:", newImplementationAddress);
+    console.log("✅ New ExampleContract implementation deployed to:", newImplementationAddress);
 
     // Connect to proxy with the UUPSUpgradeable interface to access upgradeTo
     const UUPS_INTERFACE = [

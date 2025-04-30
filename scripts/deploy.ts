@@ -8,7 +8,7 @@ async function main() {
 
 
         const [deployer] = await ethers.getSigners();
-        console.log("Deploying RapidX (Implementation + Proxy) with account:", deployer.address);
+        console.log("Deploying ExampleContract (Implementation + Proxy) with account:", deployer.address);
 
         // Load the factory address from deployments
         const network = process.env.HARDHAT_NETWORK || "local";
@@ -26,13 +26,13 @@ async function main() {
         console.log("Using CREATE3Factory at:", factoryAddress);
         const factory = await ethers.getContractAt("ICREATE3Factory", factoryAddress);
 
-        // Step 1: Deploy the RapidX implementation
-        console.log("\n📄 Deploying RapidX implementation...");
-        const RapidX = await ethers.getContractFactory("RapidX");
-        const implementationBytecode = RapidX.bytecode;
+        // Step 1: Deploy the ExampleContract implementation
+        console.log("\n📄 Deploying ExampleContract implementation...");
+        const ExampleContract = await ethers.getContractFactory("ExampleContract");
+        const implementationBytecode = ExampleContract.bytecode;
 
         // Choose a salt for deterministic addressing
-        const implementationSalt = ethers.id("RAPIDX_IMPLEMENTATION_V1");
+        const implementationSalt = ethers.id("EXAMPLECONTRACT_IMPLEMENTATION_V1");
 
         // Use CREATE3 to deploy the implementation
         const implementationTx = await factory.deploy(
@@ -49,7 +49,7 @@ async function main() {
             implementationSalt
         );
 
-        console.log("✅ RapidX implementation deployed to:", implementationAddress);
+        console.log("✅ ExampleContract implementation deployed to:", implementationAddress);
 
         // Step 2: Deploy the UUPS Proxy
         console.log("\n🔄 Deploying UUPS Proxy with CREATE3...");
@@ -58,7 +58,7 @@ async function main() {
         const ERC1967Proxy = await ethers.getContractFactory("ERC1967Proxy");
 
         // Create initialization data for the proxy
-        const initializerData = RapidX.interface.encodeFunctionData("initialize", [deployer.address]);
+        const initializerData = ExampleContract.interface.encodeFunctionData("initialize", [deployer.address]);
 
         // Create the ERC1967Proxy constructor arguments
         const proxyConstructorArgs = [
@@ -73,7 +73,7 @@ async function main() {
         ]);
 
         // Deploy using CREATE3
-        const proxySalt = ethers.id("RAPIDX_PROXY_V1");
+        const proxySalt = ethers.id("EXAMPLECONTRACT_PROXY_V1");
         const proxyTx = await factory.deploy(proxySalt, proxyBytecode, { gasLimit: 5000000 });
         await proxyTx.wait();
 
@@ -82,8 +82,8 @@ async function main() {
         console.log("✅ Proxy deployed at:", proxyAddress);
 
         // Verify ownership
-        const rapidx = await ethers.getContractAt("RapidX", proxyAddress);
-        const owner = await rapidx.owner();
+        const examplecontract = await ethers.getContractAt("ExampleContract", proxyAddress);
+        const owner = await examplecontract.owner();
         console.log("Contract owner:", owner);
 
         if (owner === deployer.address) {
@@ -111,11 +111,11 @@ async function main() {
         }
 
         fs.writeFileSync(
-            path.join(deploymentsDir, `rapidx-deployment-${network}.json`),
+            path.join(deploymentsDir, `examplecontract-deployment-${network}.json`),
             JSON.stringify(deploymentInfo, null, 2)
         );
 
-        console.log(`\n📝 Deployment info saved to ./deployments/rapidx-deployment-${network}.json`);
+        console.log(`\n📝 Deployment info saved to ./deployments/examplecontract-deployment-${network}.json`);
 
         // For verification on BscScan
         console.log("\n🔍 For verification on BscScan:");
