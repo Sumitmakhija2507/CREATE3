@@ -6,8 +6,11 @@ import path from "path";
 async function main() {
     try {
 
+        const [CREATE2_DEPLOYER, SMART_CONTRACT_DEPLOYER, executor, user, attacker] = await ethers.getSigners();
 
-        const [deployer] = await ethers.getSigners();
+        const deployer = SMART_CONTRACT_DEPLOYER;
+
+
         console.log("Deploying ExampleContract (Implementation + Proxy) with account:", deployer.address);
 
         // Load the factory address from deployments

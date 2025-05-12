@@ -3,11 +3,15 @@ import fs from "fs";
 import path from "path";
 
 async function main() {
-    const [deployer, executor, user, attacker, sameAddressSigner] = await ethers.getSigners();
-    console.log("Deploying CREATE3Factory with the account:", sameAddressSigner.address);
+    const [CREATE2_DEPLOYER, SMART_CONTRACT_DEPLOYER, executor, user, attacker] = await ethers.getSigners();
+
+    const deployer = CREATE2_DEPLOYER;
+
+    console.log((await ethers.getSigners()).length);
+    console.log("Deploying CREATE3Factory with the account:", deployer.address);
 
     // Get the current nonce
-    const currentNonce = await sameAddressSigner.getNonce();
+    const currentNonce = await deployer.getNonce();
     console.log("Current nonce:", currentNonce);
 
     // Define the target nonce for deploying CREATE3Factory
@@ -28,8 +32,8 @@ async function main() {
         // Send dummy transactions to increase nonce
         for (let i = currentNonce; i < targetNonce; i++) {
             console.log(`Sending dummy tx to increase nonce to ${i + 1}...`);
-            const tx = await sameAddressSigner.sendTransaction({
-                to: sameAddressSigner.address,
+            const tx = await deployer.sendTransaction({
+                to: deployer.address,
                 value: ethers.parseEther("0"),
                 gasLimit: 21000
             });
@@ -37,7 +41,7 @@ async function main() {
         }
 
         // Verify the nonce was increased correctly
-        const newNonce = await sameAddressSigner.getNonce();
+        const newNonce = await deployer.getNonce();
         console.log(`Nonce increased to ${newNonce}`);
 
         if (newNonce !== targetNonce) {
@@ -47,7 +51,7 @@ async function main() {
     }
 
     // Get the contract bytecode and factory
-    const CREATE3Factory = await ethers.getContractFactory("CREATE3Factory", sameAddressSigner);
+    const CREATE3Factory = await ethers.getContractFactory("CREATE3Factory", deployer);
 
     // Deploy the factory with the correct nonce
     console.log(`Deploying CREATE3Factory with nonce ${targetNonce}...`);

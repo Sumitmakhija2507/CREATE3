@@ -1,0 +1,10 @@
+{
+  "network": "Ethereum_SEPOLIA",
+  "factoryAddress": "0xfe0C43CefdC957772Ce4361C2AC195e212a66F34",
+  "implementationAddress": "0x5aFa26971650E06F8fE6615e427a53C9C4168A77",
+  "implementationSalt": "0x2c4242af9053eaf9b625b433b0e83a87464988ced679a1fa6eae7004ba5f02bc",
+  "proxyAddress": "0x5ff443E51fc55c278fBfe65D29E2B2ee59604f16",
+  "proxySalt": "0x3a5108b94015440fdc3006934fd84b4fa85a390e6edd00cc788e10a17a3b181c",
+  "owner": "0x4676f34Ac39c78aCc9d1906E3Cd0ED8c5A472729",
+  "deploymentDate": "2025-05-08T13:01:55.334Z"
+}

@@ -41,7 +41,7 @@ async function main() {
     const examplecontract = await ethers.getContractAt("ExampleContract", proxyAddress);
 
     // Executor address to set
-    const executorAddress = "0x4D9C1Ae0d1983Ce041358e6Db1aAf678C78CfA7d";
+    const executorAddress = "0x4676f34Ac39c78aCc9d1906E3Cd0ED8c5A472729";
     const status = true;
 
     if (!executorAddress || !ethers.isAddress(executorAddress)) {
