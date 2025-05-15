@@ -1,12 +1,3 @@
-Absolutely — here’s a **corrected and enhanced `README.md`** for your `CREATE3Factory` GitHub repository. It includes:
-
-* ✅ Proper explanation of CREATE3 flow
-* ✅ Realistic deployment illustration
-* ✅ Correct guidance on factory deployment (nonce/fresh wallet/CREATE2 option)
-* ✅ SEO-optimized language for indexing on GitHub and Google
-
----
-
 # 🚀 CREATE3 Factory: Deterministic Smart Contract Deployment (Same Address Across All EVM Chains)
 
 `CREATE3` enables deploying contracts at **the same address on every EVM-compatible blockchain**, without depending on deployer wallets or nonces — perfect for multi-chain deployments, wallet abstraction tooling, or predictable address registries.
@@ -29,6 +20,17 @@ This results in a **stable and predictable address**, even if:
 ---
 
 ![4c7aab4f-0d1e-4e10-ae35-1018c50f9d05](https://github.com/user-attachments/assets/e85c9785-1693-4436-ae00-a6017c614551)
+
+## 🔄 CREATE vs CREATE2 vs CREATE3 — Key Differences
+
+| Feature                   | `CREATE`                     | `CREATE2`                          | `CREATE3`                           |
+| ------------------------- | ---------------------------- | ---------------------------------- | ----------------------------------- |
+| Address Depends On        | Sender + Nonce               | Sender + Salt + Bytecode           | Sender + Salt                      |
+| Predictable Address       | ❌ No                         | ✅ Yes                              | ✅ Yes                               |
+| Re-deploy to Same Address | ❌ Not Possible               | ✅ As long as bytecode is the same  | ✅ As long as salt isn’t reused      |
+| Multi-chain Consistency   | ❌ Deployers differ per chain | ⚠️ Must use same deployer and salt | ✅ Use same factory + salt on chains |
+
+
 
 ## 📦 How CREATE3 Works (Visual Flow)
 
