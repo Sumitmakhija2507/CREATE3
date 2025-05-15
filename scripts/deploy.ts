@@ -6,7 +6,7 @@ import path from "path";
 async function main() {
     try {
 
-        const [CREATE2_DEPLOYER, SMART_CONTRACT_DEPLOYER, executor, user, attacker] = await ethers.getSigners();
+        const [CREATE3_DEPLOYER, SMART_CONTRACT_DEPLOYER, executor, user, attacker] = await ethers.getSigners();
 
         const deployer = SMART_CONTRACT_DEPLOYER;
 

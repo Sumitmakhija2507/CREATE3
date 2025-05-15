@@ -3,9 +3,9 @@ import fs from "fs";
 import path from "path";
 
 async function main() {
-    const [CREATE2_DEPLOYER, SMART_CONTRACT_DEPLOYER, executor, user, attacker] = await ethers.getSigners();
+    const [CREATE3_DEPLOYER, SMART_CONTRACT_DEPLOYER, executor, user, attacker] = await ethers.getSigners();
 
-    const deployer = CREATE2_DEPLOYER;
+    const deployer = CREATE3_DEPLOYER;
 
     console.log((await ethers.getSigners()).length);
     console.log("Deploying CREATE3Factory with the account:", deployer.address);
